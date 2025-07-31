@@ -1,0 +1,204 @@
+/* Font-face */
+@font-face {
+  font-family: 'Nitti';
+  src: url('Nitti-Normal.ttf') format('truetype');
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* CSS-variabler */
+:root {
+  --logo-large: 500px;
+  --logo-small: 120px;
+  --fade-dist: 200;
+  --logo-dist: 50;
+  --ellipse-hover-scale: 1.06;
+  --ellipse-width: 100%;    /* ellipse‐bredde = 100% af knappen */
+  --image-step: 60;
+  --image-size: 300px;
+  --safe-top: 200px;
+  --safe-bottom: 200px;
+  --safe-side: 50px;
+
+  /* Knap‐dimensioner */
+  --btn-width: 300px;
+  --btn-height: 50px;
+}
+
+/* Body – ingen scroll */
+body {
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Nitti', sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+/* Navigation (fast) */
+nav {
+  position: fixed;
+  top: 20px; right: 30px;
+  z-index: 999;
+  opacity: 1 !important;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+.nav-links a {
+  font-size: 0.8rem;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover {
+  color: #BEF754;
+}
+
+/* Landing */
+#landing {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+#bg-video {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transition: opacity 1s ease-out;
+}
+.logo {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--logo-large);
+  transition: top 0.3s ease, transform 0.3s ease, width 0.3s ease;
+  z-index: 999; opacity: 1 !important;
+}
+.logo.fixed {
+  top: 20px;
+  transform: translateX(-50%);
+  width: var(--logo-small);
+}
+.content-container {
+  position: absolute; top: 60%; left: 50%;
+  transform: translateX(-50%);
+  text-align: center; z-index: 10;
+  transition: opacity 1s ease-out;
+}
+.subtitle {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+/* Knap-styling (begge knapper) */
+.btn {
+  position: relative;
+  display: block;
+  width: var(--btn-width);
+  height: var(--btn-height);
+  line-height: var(--btn-height);
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 11;
+  transition: opacity 1s ease-out;
+  margin: 1rem auto;       /* centrerer altid knappen */
+  text-align: center;      /* centrerer teksten inden i knappen */
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: var(--ellipse-width);
+  height: 100%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  border: 2px solid #fff;
+  border-radius: 50%/50%;
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+.btn:hover::before {
+  transform: translate(-50%, -50%) scale(var(--ellipse-hover-scale));
+}
+
+/* Scroll-pil */
+.scroll-arrow {
+  position: fixed; bottom: 20px; left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+  font-size: 1.5rem; color: #fff;
+  z-index: 999; opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Fade-overlay */
+#scroll-fade {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000; pointer-events: none;
+  opacity: 0; z-index: 15;
+  transition: opacity 1s ease-out;
+}
+
+/* Galleri */
+#gallery {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100vh;
+  opacity: 1; transition: opacity 1s ease-out;
+  pointer-events: none; z-index: 18;
+}
+.gallery-img {
+  position: absolute; opacity: 0;
+  transition: opacity 0.3s ease-out;
+  max-width: var(--image-size);
+  max-height: var(--image-size);
+  transform: translate(-50%, -50%);
+}
+/* Fade galleri ud */
+#scroll-fade[data-faded="true"] ~ #gallery {
+  opacity: 0;
+}
+
+/* Fade pil ud */
+#scroll-fade[data-faded="true"] ~ .scroll-arrow {
+  opacity: 0;
+}
+
+/* Kontakt-sektion */
+.contact-section {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100vh;
+  background: #000;
+  display: flex; justify-content: center; align-items: center;
+  z-index: 20; opacity: 0; visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 0s linear 1s;
+}
+#scroll-fade[data-faded="true"] ~ .contact-section {
+  visibility: visible; opacity: 1;
+}
+
+/* Kontakt-tekst */
+.contact-content {
+  width: 80%; max-width: 600px;
+  text-align: left; margin: 0 auto;
+}
+.contact-heading {
+  font-size: 1.5rem; margin-bottom: 1rem; color: #fff;
+}
+.contact-subheading {
+  font-size: 1rem; margin-bottom: 2rem; color: #fff;
+}
+
+/* Kontakt-knap */
+.contact-section .btn {
+  /* arver centreret margin og styling fra .btn */
+}
